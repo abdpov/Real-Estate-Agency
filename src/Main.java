@@ -1,5 +1,5 @@
 import java.sql.*;
-        import java.util.Arrays;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -10,6 +10,7 @@ public class Main {
     private static String currentRole = null;
     public static String currentUser = null;
     public static int loggedInUserId = -1;
+    // метод для входа в систему
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         createUsersTable();
