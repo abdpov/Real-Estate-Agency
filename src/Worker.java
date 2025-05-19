@@ -28,7 +28,7 @@ public class Worker extends RoleMenu{
             }
         }
     }
-
+// метод показывающтй пользователюсписок его задач из таблицы tasks
     private static void viewMyTasks(String username) {
         scanner.nextLine();
         String getTasksSQL = "SELECT task, status FROM tasks WHERE username = ?";
@@ -56,7 +56,7 @@ public class Worker extends RoleMenu{
             System.out.println("Ошибка: " + e.getMessage());
         }
     }
-
+// метод который показывает статус задачи
     private static void markTaskAsFinished() {
         String getTasksSQL = "SELECT id, task, status FROM tasks WHERE username = ?";
         String updateTaskSQL = "UPDATE tasks SET status = 'finished' WHERE id = ?";
@@ -108,6 +108,7 @@ public class Worker extends RoleMenu{
             scanner.nextLine(); // clear invalid input
         }
     }
+    // метод показывающий активыне задачи
     private static void viewPActiveTasks(String username) {
         String getTasksSQL = "SELECT task FROM tasks WHERE username = ? AND status = 'assigned'";
 
@@ -133,6 +134,7 @@ public class Worker extends RoleMenu{
             System.out.println("Ошибка при извлечении активных задач: " + e.getMessage());
         }
     }
+    // метод показывающий зарплату сотрудников
     private static void viewWorkerSalary() {
         scanner.nextLine(); // clear leftover newline
 

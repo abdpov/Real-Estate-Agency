@@ -4,19 +4,19 @@ import java.util.*;
 public class Sales extends RoleMenu{
     static Scanner scanner = new Scanner(System.in);
     private static final String DB_URL = "jdbc:sqlite:real_estate_agency.db";
-
+    // метод показывающий менюшку
     public void showMenu(){
         while (true){
             System.out.println("1. Показать всех клиентов");
-            System.out.println("2. Show houses for sale");
-            System.out.println("3. Show sold houses");
-            System.out.println("4. Show most expensive house");
-            System.out.println("5. Show cheapest house");
-            System.out.println("6. Exit");
+            System.out.println("2. Показать дома на продажу");
+            System.out.println("3. Показать проданные дома");
+            System.out.println("4. Показать самый дорогой дом");
+            System.out.println("5. Показать самый дешевый дом");
+            System.out.println("6. Выход");
             int option = scanner.nextInt();
 
             if(option == 1){
-                System.out.println("Total amount of clients is: 1120");
+                System.out.println("Общее количество клиентов: 1120");
             } else if (option == 2) {
                 viewAvailableHouses();
             } else if (option == 3) {
@@ -28,10 +28,11 @@ public class Sales extends RoleMenu{
             } else if (option == 6) {
                 break;
             }  else {
-                System.out.println("Invalid option");
+                System.out.println("Неверная опция");
             }
         }
     }
+    // метод показывающйи доступнве дома
     private static void viewAvailableHouses() {
         String sql = "SELECT id, price, address FROM houses WHERE status = 'available'";
 
@@ -39,7 +40,7 @@ public class Sales extends RoleMenu{
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
-            System.out.println("\n🏡 Available Houses:");
+            System.out.println("\n🏡 Доступные дома:");
             boolean found = false;
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -51,13 +52,14 @@ public class Sales extends RoleMenu{
             }
 
             if (!found) {
-                System.out.println("📭 No available houses found.");
+                System.out.println("📭 Не найдено доступных домов.");
             }
 
         } catch (SQLException e) {
-            System.out.println("Error retrieving available houses: " + e.getMessage());
+            System.out.println("Ошибка при получении доступных домов: " + e.getMessage());
         }
     }
+    //метод показывающий проданные дома
     private static void viewSoldHouses() {
         String sql = "SELECT id, price, address FROM houses WHERE status = 'sold'";
 
@@ -65,7 +67,7 @@ public class Sales extends RoleMenu{
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
-            System.out.println("\n🏠 Sold Houses:");
+            System.out.println("\n🏠 Проданные дома:");
             boolean found = false;
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -77,13 +79,14 @@ public class Sales extends RoleMenu{
             }
 
             if (!found) {
-                System.out.println("📭 No sold houses found.");
+                System.out.println("📭 Не найдены проданные дома.");
             }
 
         } catch (SQLException e) {
-            System.out.println("Error retrieving sold houses: " + e.getMessage());
+            System.out.println("Ошибка при получении проданных домов: " + e.getMessage());
         }
     }
+    //метод показывающий самые дорогие дома
     private static void getMostExpensiveHouse() {
         String sql = "SELECT id, price, address, status FROM houses ORDER BY price DESC LIMIT 1";
 
@@ -92,19 +95,20 @@ public class Sales extends RoleMenu{
              ResultSet rs = stmt.executeQuery()) {
 
             if (rs.next()) {
-                System.out.println("\n🤑 Most Expensive House:");
+                System.out.println("\n🤑 Самый дорогой дом:");
                 System.out.println("ID: " + rs.getInt("id"));
-                System.out.println("Price: $" + rs.getDouble("price"));
-                System.out.println("Address: " + rs.getString("address"));
-                System.out.println("Status: " + rs.getString("status"));
+                System.out.println("Цена: $" + rs.getDouble("price"));
+                System.out.println("Адрес: " + rs.getString("address"));
+                System.out.println("SСтатус: " + rs.getString("status"));
             } else {
-                System.out.println("📭 No houses found.");
+                System.out.println("📭 Дома не найдены.");
             }
 
         } catch (SQLException e) {
-            System.out.println("Error retrieving most expensive house: " + e.getMessage());
+            System.out.println("Ошибка при получении самого дорогого дома: " + e.getMessage());
         }
     }
+    //метод показывающий самые дорогие дома
     private static void getCheapestHouse() {
         String sql = "SELECT id, price, address, status FROM houses ORDER BY price ASC LIMIT 1";
 
@@ -113,17 +117,17 @@ public class Sales extends RoleMenu{
              ResultSet rs = stmt.executeQuery()) {
 
             if (rs.next()) {
-                System.out.println("\n💸 Cheapest House:");
+                System.out.println("\n💸 Самый дешевый дом:");
                 System.out.println("ID: " + rs.getInt("id"));
-                System.out.println("Price: $" + rs.getDouble("price"));
-                System.out.println("Address: " + rs.getString("address"));
-                System.out.println("Status: " + rs.getString("status"));
+                System.out.println("Цена: $" + rs.getDouble("price"));
+                System.out.println("Адрес: " + rs.getString("address"));
+                System.out.println("Статус: " + rs.getString("status"));
             } else {
-                System.out.println("📭 No houses found.");
+                System.out.println("📭 Не найдено домов.");
             }
 
         } catch (SQLException e) {
-            System.out.println("Error retrieving cheapest house: " + e.getMessage());
+            System.out.println("Ошибка при получении самого дешевого дома: " + e.getMessage());
         }
     }
 

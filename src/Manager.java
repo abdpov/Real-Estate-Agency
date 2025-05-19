@@ -1,6 +1,6 @@
 import java.util.*;
 import java.sql.*;
-
+// метод показывающий менюшки для Менеджера
 public class Manager extends RoleMenu{
     static Scanner scanner = new Scanner(System.in);
     private static final String DB_URL = "jdbc:sqlite:real_estate_agency.db";
@@ -29,6 +29,7 @@ public class Manager extends RoleMenu{
             }
         }
     }
+    // метод показывающий всех сотрудников(worker)
     private static void showAllWorkers() {
         String sql = "SELECT username FROM users WHERE role = 'worker'";
 
@@ -46,7 +47,7 @@ public class Manager extends RoleMenu{
             System.out.println("Ошибка при извлечении пользователей: " + e.getMessage());
         }
     }
-
+// метод чтобы назначить задачу
     private static void assignTask() {
         scanner.nextLine();
 
@@ -90,10 +91,11 @@ public class Manager extends RoleMenu{
             System.out.println("Ошибка назначения задачи: " + e.getMessage());
         }
     }
+    // медот показывающий задачи для определенного работника
     private static void viewWorkerTasks() {
         scanner.nextLine(); // Clear leftover newline if needed
 
-        System.out.print("Enter the worker's username: ");
+        System.out.print("Введите имя пользователя работника: ");
         String username = scanner.nextLine();
 
         String getUserSQL = "SELECT role FROM users WHERE username = ?";
@@ -109,7 +111,7 @@ public class Manager extends RoleMenu{
                 String role = userRs.getString("role");
 
                 if (!role.equalsIgnoreCase("worker")) {
-                    System.out.println("❌ That user is not a worker.");
+                    System.out.println("❌ Пользователь не является сотрудником.");
                     return;
                 }
 

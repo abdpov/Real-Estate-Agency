@@ -1,3 +1,4 @@
+// метод который принимает роль пользователя, а потом возваращет его в класс RoleMenu
 public class Menus {
     public static RoleMenu getMenu(String role) {
         return switch (role.toLowerCase()) {
@@ -10,3 +11,4 @@ public class Menus {
         };
     }
 }
+

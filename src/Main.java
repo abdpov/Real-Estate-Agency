@@ -20,7 +20,7 @@ public class Main {
         System.out.println("0. Выход");
         System.out.print("Выберите опцию: ");
         int option = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
         if (option == 1) {
             System.out.print("Введите имя пользователя: ");
@@ -29,7 +29,7 @@ public class Main {
             System.out.print("Введите пароль: ");
             String password = scanner.nextLine();
 
-            // Step 2: Validate role input
+            // Шаг 2: Проверка ввода роли
             String role;
             while (true) {
                 System.out.print("Выберите должность (Manager\\Worker\\Director\\Sales manager\\Marketing): ");
@@ -47,7 +47,7 @@ public class Main {
                 System.out.println("Неверная должность, попробуйте еще.");
             }
 
-            // Register with validated role
+            // Зарегистрируйтесь с подтвержденной ролью
             registerUser(username, password, role);
         }
         else if (option == 2) {
@@ -78,7 +78,7 @@ public class Main {
 
         scanner.close();
     }
-
+   // метод для создания таблицы Users в базе данных
     private static void createUsersTable() {
         String sql = "CREATE TABLE IF NOT EXISTS users (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -94,7 +94,7 @@ public class Main {
             System.out.println("Ошибка создания таблицы: " + e.getMessage());
         }
     }
-
+    // метод который регистриует пользователя
     private static void registerUser(String username, String password, String role) {
         String sql = "INSERT INTO users(username, password, role) VALUES(?, ?, ?)";
 
@@ -111,7 +111,7 @@ public class Main {
             System.out.println("Ошибка регистрации: " + e.getMessage());
         }
     }
-
+    //метод чтобы зайти в аккаунт
     private static void loginUser(String username, String password) {
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
 

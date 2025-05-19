@@ -4,6 +4,7 @@ import java.util.*;
 public class Marketing extends RoleMenu {
     private static final String DB_URL = "jdbc:sqlite:real_estate_agency.db";
     Scanner scanner = new Scanner(System.in);
+    // метод показывающи йсменюшку для маркетолога
     public void showMenu() {
         while (true){
             System.out.println("1. Показать зону");
@@ -45,6 +46,8 @@ public class Marketing extends RoleMenu {
             }
         }
     }
+    // метод показывающий список маркетинговых платформ и информации
+    // о количестве пользователей на каждой из них
     protected void showMarketingPlatforms() {
         System.out.println("\n--- Маркетинговые платформы ---");
 
@@ -69,7 +72,7 @@ public class Marketing extends RoleMenu {
 
         System.out.println("0. назад");
     }
-
+    // метод для отображения инфы о потраченном бюджете на маркетинговой платформе по ID
     public static void showBudgetSpent(int platformId) {
         String sql = "SELECT name, budget_spent FROM MarketingPlatforms WHERE id = ?";
 
@@ -95,7 +98,7 @@ public class Marketing extends RoleMenu {
         }
     }
 
-    // Get current marketing budget
+    // метод для получения общего маркетингового бюджета из таблицы marketing_budget в базе данных
     public static double getMarketingBudget() {
         String sql = "SELECT total_budget FROM marketing_budget LIMIT 1";
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -111,7 +114,7 @@ public class Marketing extends RoleMenu {
         return 0;
     }
 
-    // Spend part of the budget
+    // мемтод показывающий траты бюджета на продвижение конкретной маркетинговой платформы
     private static void spendOnPromotion(int platformId, double amount) {
         double currentBudget = getMarketingBudget();
 

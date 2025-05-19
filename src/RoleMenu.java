@@ -1,9 +1,9 @@
 import java.util.*;
-
+//родительский класс который наследуют классы Worker,Menus и Manager
 public abstract class RoleMenu {
     abstract void showMenu();
 
-
+    // метод показывающий информацию о клиентском охвате по регионам
     public static void showCoverageByRegion() {
         Map<Integer, String> regionNames = new LinkedHashMap<>();
         regionNames.put(1, "Bishkek");
@@ -35,15 +35,15 @@ public abstract class RoleMenu {
         );
 
         Scanner scanner = new Scanner(System.in);
-
+        // цикл работающий пока пользователь нн выберет выход
         while (true) {
-            System.out.println("\n--- Client Coverage by Region ---");
+            System.out.println("\n--- Охват клиентов по регионам ---");
             for (Map.Entry<Integer, String> entry : regionNames.entrySet()) {
                 System.out.println(entry.getKey() + ". " + entry.getValue());
             }
-            System.out.println("0. Back");
+            System.out.println("0. Выход");
 
-            System.out.print("Choose a region: ");
+            System.out.print("Выберите регион: ");
             int choice = scanner.nextInt();
 
             if (choice == 0) break;
@@ -53,11 +53,11 @@ public abstract class RoleMenu {
                 int coverage = coverageMap.get(region);
                 int customers = customerMap.get(region);
 
-                System.out.println("\nRegion: " + region);
-                System.out.println("Coverage: " + coverage + "%");
-                System.out.println("Number of customers: " + customers);
+                System.out.println("\nРегион: " + region);
+                System.out.println("Зона охвата: " + coverage + "%");
+                System.out.println("Количество клиентов: " + customers);
             } else {
-                System.out.println("Invalid choice.");
+                System.out.println("Неверный выбор.");
             }
         }
     }

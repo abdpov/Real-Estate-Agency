@@ -1,6 +1,6 @@
 import java.util.*;
 import  java.sql.*;
-
+// метод показывающий действия Директора
 public class Director extends RoleMenu{
     static Scanner scanner = new Scanner(System.in);
     private static final String DB_URL = "jdbc:sqlite:real_estate_agency.db";
@@ -56,6 +56,7 @@ public class Director extends RoleMenu{
             }
         }
     }
+    //расчёт общего бюджета зарплат всех пользователей из таблицы users в базе данных
     private static void showTotalSalaryBudget() {
         String sql = "SELECT SUM(salary) AS total_salary FROM users";
 
@@ -74,6 +75,7 @@ public class Director extends RoleMenu{
             System.out.println("Ошибка расчета общей зарплаты: " + e.getMessage());
         }
     }
+    // метод для увелтичения зп
     private static void increaseSalary() {
         scanner.nextLine();
 
@@ -120,6 +122,7 @@ public class Director extends RoleMenu{
             System.out.println("Ошибка обновления зарплаты: " + e.getMessage());
         }
     }
+    // метод для умееньшения зп
     private static void decreaseSalary() {
         scanner.nextLine();
 
