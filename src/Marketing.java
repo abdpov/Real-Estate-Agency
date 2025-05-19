@@ -2,17 +2,17 @@ import java.sql.*;
 import java.util.*;
 
 public class Marketing extends RoleMenu {
-    private static final String DB_URL = "jdbc:sqlite:real_state_agency.db";
+    private static final String DB_URL = "jdbc:sqlite:real_estate_agency.db";
     Scanner scanner = new Scanner(System.in);
     public void showMenu() {
         while (true){
-            System.out.println("1. Show coverage");
-            System.out.println("2. Show marketing platforms");
-            System.out.println("3. Show spent budget on a platform");
-            System.out.println("4. Show total budget");
-            System.out.println("5. Spend budget on marketing");
-            System.out.println("6. Exit");
-            System.out.print("Choose option: ");
+            System.out.println("1. Показать зону");
+            System.out.println("2. Показать маркетинговые платформы");
+            System.out.println("3. Показать потраченный бюджет на платформе");
+            System.out.println("4. Показать общий бюджет");
+            System.out.println("5. Расходы на маркетинг");
+            System.out.println("6. Выход");
+            System.out.print("Выберите опцию: ");
             int option = scanner.nextInt();
             if(option == 1){
                 showCoverageByRegion();
@@ -20,7 +20,7 @@ public class Marketing extends RoleMenu {
                 showMarketingPlatforms();
             } else if(option == 3){
                 while(true){
-                    System.out.println("\n--- Choose platform ---\n1. Facebook\n2. Instagram\n3. YouTube\n4. Telegram\n0. Back");
+                    System.out.println("\n--- Выберите платформу ---\n1. Facebook\n2. Instagram\n3. YouTube\n4. Telegram\n0. Back");
                     int choice = scanner.nextInt();
                     if (choice == 0) break;
                     showBudgetSpent(choice);
@@ -29,11 +29,11 @@ public class Marketing extends RoleMenu {
                 System.out.println(getMarketingBudget());
             } else if(option == 5){
                 while (true) {
-                    System.out.println("\n--- Choose platform ---\n1. Facebook\n2. Instagram\n3. YouTube\n4. Telegram\n0. Back");
+                    System.out.println("\n--- выберите платформу ---\n1. Facebook\n2. Instagram\n3. YouTube\n4. Telegram\n0. Back");
                     int choice = scanner.nextInt();
                     if (choice == 0) break;
 
-                    System.out.print("Enter amount to spend: ");
+                    System.out.print("Введите сумму, которую хотите потратить: ");
                     int amount = scanner.nextInt();
 
                     spendOnPromotion(choice, amount);
@@ -41,12 +41,12 @@ public class Marketing extends RoleMenu {
             } else if(option == 6){
                 break;
             } else {
-                System.out.println("Invalid option");
+                System.out.println("Неверная опция");
             }
         }
     }
     protected void showMarketingPlatforms() {
-        System.out.println("\n--- Marketing Platforms ---");
+        System.out.println("\n--- Маркетинговые платформы ---");
 
         String query = "SELECT name, user_count FROM MarketingPlatforms";
 
@@ -58,16 +58,16 @@ public class Marketing extends RoleMenu {
                 String name = rs.getString("name");
                 int userCount = rs.getInt("user_count");
 
-                System.out.println("Platform: " + name);
+                System.out.println("Платформа: " + name);
                 System.out.println("Number of subscribers: " + userCount);
                 System.out.println();
             }
 
         } catch (SQLException e) {
-            System.out.println("Error loading marketing platforms: " + e.getMessage());
+            System.out.println("Ошибка загрузки маркетинговых платформ: " + e.getMessage());
         }
 
-        System.out.println("0. Back");
+        System.out.println("0. назад");
     }
 
     public static void showBudgetSpent(int platformId) {
@@ -83,15 +83,15 @@ public class Marketing extends RoleMenu {
                 String name = rs.getString("name");
                 double budgetSpent = rs.getDouble("budget_spent");
 
-                System.out.println("\n--- Platform Budget Info ---");
-                System.out.println("Platform: " + name);
-                System.out.println("Budget spent: " + budgetSpent);
+                System.out.println("\n--- Информация о бюджете платформы ---");
+                System.out.println("Платформа: " + name);
+                System.out.println("Бюджет израсходован: " + budgetSpent);
             } else {
                 System.out.println("❌ Platform not found with ID: " + platformId);
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Error fetching platform budget: " + e.getMessage());
+            System.out.println("❌ Ошибка при получении бюджета платформы: " + e.getMessage());
         }
     }
 
@@ -106,7 +106,7 @@ public class Marketing extends RoleMenu {
                 return rs.getDouble("total_budget");
             }
         } catch (SQLException e) {
-            System.out.println("Error reading marketing budget: " + e.getMessage());
+            System.out.println("Ошибка чтения маркетингового бюджета: " + e.getMessage());
         }
         return 0;
     }
@@ -116,7 +116,7 @@ public class Marketing extends RoleMenu {
         double currentBudget = getMarketingBudget();
 
         if (amount > currentBudget) {
-            System.out.println("❌ Not enough marketing budget. Current budget: " + currentBudget);
+            System.out.println("❌ Недостаточно маркетингового бюджета. Текущий бюджет: " + currentBudget);
             return;
         }
 
@@ -139,7 +139,7 @@ public class Marketing extends RoleMenu {
                 ResultSet rs = getPlatformStmt.executeQuery();
 
                 if (!rs.next()) {
-                    System.out.println("❌ Platform not found with ID: " + platformId);
+                    System.out.println("❌ Платформа с идентификатором не найдена: " + platformId);
                     return;
                 }
 
@@ -155,17 +155,17 @@ public class Marketing extends RoleMenu {
                 updatePlatformBudgetStmt.executeUpdate();
 
                 conn.commit();
-                System.out.println("✅ Spent " + amount + " on " + platformName + ". New budget: " + newBudget);
+                System.out.println("✅ Вложите " + amount + " на " + platformName + ". бюджет: " + newBudget);
 
             } catch (SQLException e) {
                 conn.rollback();
-                System.out.println("❌ Error during transaction: " + e.getMessage());
+                System.out.println("❌ Ошибка во время транзакции: " + e.getMessage());
             } finally {
                 conn.setAutoCommit(true); // Reset autocommit
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Error updating budget: " + e.getMessage());
+            System.out.println("❌ Ошибка обновления бюджета.: " + e.getMessage());
         }
     }
 }

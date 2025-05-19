@@ -3,7 +3,7 @@ import java.sql.*;
 
 public class Worker extends RoleMenu{
     static Scanner scanner = new Scanner(System.in);
-    private static final String DB_URL = "jdbc:sqlite:real_state_agency.db";
+    private static final String DB_URL = "jdbc:sqlite:real_estate_agency.db";
     public void showMenu(){
         while(true) {
             System.out.println("1. Показать список порученных мне дел");

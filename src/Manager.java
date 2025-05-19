@@ -3,14 +3,14 @@ import java.sql.*;
 
 public class Manager extends RoleMenu{
     static Scanner scanner = new Scanner(System.in);
-    private static final String DB_URL = "jdbc:sqlite:real_state_agency.db";
+    private static final String DB_URL = "jdbc:sqlite:real_estate_agency.db";
     public void showMenu() {
         while (true){
-            System.out.println("1. List all the workers");
-            System.out.println("2. Assign tasks");
-            System.out.println("3. Show assigned tasks");
-            System.out.println("4. Show coverage");
-            System.out.println("5. Exit");
+            System.out.println("1. Перечислите всех рабочих");
+            System.out.println("2. Назначение задач");
+            System.out.println("3. Показать назначенные задачи");
+            System.out.println("4. Покажите зону охвата");
+            System.out.println("5. Выход");
             int option = scanner.nextInt();
 
             if(option == 1){
@@ -25,7 +25,7 @@ public class Manager extends RoleMenu{
                 break;
 
             } else {
-                System.out.println("Invalid option");
+                System.out.println("Неверный вариант");
             }
         }
     }
@@ -36,24 +36,24 @@ public class Manager extends RoleMenu{
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
-            System.out.println("\n--- All Workers ---");
+            System.out.println("\n--- Все работники ---");
             while (rs.next()) {
                 String username = rs.getString("username");
                 System.out.println("👤 " + username);
             }
 
         } catch (SQLException e) {
-            System.out.println("Error fetching users: " + e.getMessage());
+            System.out.println("Ошибка при извлечении пользователей: " + e.getMessage());
         }
     }
 
     private static void assignTask() {
         scanner.nextLine();
 
-        System.out.print("Enter username to assign task to: ");
+        System.out.print("Введите имя пользователя, которому будет назначена задача: ");
         String username = scanner.nextLine();
 
-        System.out.print("Enter task description (e.g., 'Complete report'): ");
+        System.out.print("Введите описание задачи (например, «Завершить отчет»): ");
         String task = scanner.nextLine();
 
         String getUserSQL = "SELECT id, role FROM users WHERE username = ?";
@@ -70,7 +70,7 @@ public class Manager extends RoleMenu{
                 String role = rs.getString("role");
 
                 if (!role.equalsIgnoreCase("worker")) {
-                    System.out.println("❌ Cannot assign tasks to non-worker roles (e.g., " + role + ").");
+                    System.out.println("❌ Невозможно назначать задачи нерабочим ролям (например, " + role + ").");
                     return;
                 }
 
@@ -83,11 +83,11 @@ public class Manager extends RoleMenu{
                 }
 
             } else {
-                System.out.println("❌ User not found.");
+                System.out.println("❌ Задача, назначенная работнику.");
             }
 
         } catch (SQLException e) {
-            System.out.println("Error assigning task: " + e.getMessage());
+            System.out.println("Ошибка назначения задачи: " + e.getMessage());
         }
     }
     private static void viewWorkerTasks() {
@@ -117,7 +117,7 @@ public class Manager extends RoleMenu{
                     getTasksStmt.setString(1, username);
                     ResultSet taskRs = getTasksStmt.executeQuery();
 
-                    System.out.println("\n📋 Tasks assigned to " + username + ":");
+                    System.out.println("\n📋 Задачи, возложенные на " + username + ":");
                     boolean hasTasks = false;
                     while (taskRs.next()) {
                         String task = taskRs.getString("task");
@@ -127,16 +127,16 @@ public class Manager extends RoleMenu{
                     }
 
                     if (!hasTasks) {
-                        System.out.println("📭 No tasks assigned.");
+                        System.out.println("📭 Нет назначенных задач.");
                     }
                 }
 
             } else {
-                System.out.println("❌ User not found.");
+                System.out.println("❌ Пользователь не найден.");
             }
 
         } catch (SQLException e) {
-            System.out.println("Error retrieving tasks: " + e.getMessage());
+            System.out.println("Ошибка при получении задач: " + e.getMessage());
         }
     }
 }

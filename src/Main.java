@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    private static final String DB_URL = "jdbc:sqlite:real_state_agency.db";
+    private static final String DB_URL = "jdbc:sqlite:real_estate_agency.db";
     private static final String[] ALLOWED_ROLES = {
             "manager", "worker", "director", "sales manager", "marketing"
     };
@@ -32,7 +32,7 @@ public class Main {
             // Step 2: Validate role input
             String role;
             while (true) {
-                System.out.print("Выберите должность  (Manager\\Worker\\Director\\Sales manager\\Marketing): ");
+                System.out.print("Выберите должность (Manager\\Worker\\Director\\Sales manager\\Marketing): ");
                 role = scanner.nextLine().toLowerCase();
 
                 boolean valid = false;
@@ -84,6 +84,7 @@ public class Main {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "username TEXT NOT NULL UNIQUE," +
                 "password TEXT NOT NULL" +
+                "role TEXT NOT NULL" +
                 ");";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -123,7 +124,7 @@ public class Main {
             currentUser = username;
 
             if (rs.next()) {
-                String role = rs.getString("должность");
+                String role = rs.getString("role");
                 currentRole = role;
                 loggedInUserId = rs.getInt("id");
                 System.out.println("Вход успешный. Добро пожаловать " + username + " (" + role + ")");
@@ -135,8 +136,6 @@ public class Main {
         }
     }
 }
-
-
 /*
 1 connect database to main class
 2 make user login password system
